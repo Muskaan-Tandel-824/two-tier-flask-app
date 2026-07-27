@@ -1,3 +1,31 @@
+## About This Fork
+This is a fork of [original-repo-link]. 
+
+**My contribution:**
+- Dockerized the application and MySQL database
+- Set up custom Docker network for multi-container communication
+- Debugged and resolved a MySQL connection failure caused by a 
+  missing environment variable (see below)
+
+## Issue Faced & Resolution
+Error: `MySQLdb.OperationalError: (1049, "Unknown database 'default_db'")`
+
+Root cause: The app's `app.py` had fallback defaults for DB config 
+(e.g., `os.environ.get('MYSQL_DB', 'default_db')`). When the 
+`MYSQL_DB` environment variable wasn't passed in `docker run`, 
+it silently used the wrong default database name.
+
+Fix: Verified actual MySQL container config using `docker inspect`, 
+then passed correct environment variables explicitly:
+
+\`\`\`bash
+docker run -d -p 5000:5000 --network two-tier-net \
+  -e MYSQL_HOST=mysql \
+  -e MYSQL_USER=root \
+  -e MYSQL_PASSWORD=root \
+  -e MYSQL_DB=devops \
+  two-tier-backend:latest
+\`\`\`
  
 # Flask App with MySQL Docker Setup
 
