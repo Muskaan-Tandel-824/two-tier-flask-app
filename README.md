@@ -1,5 +1,5 @@
 ## About This Fork
-This is a fork of [original-repo-link]. 
+This is a fork of [https://github.com/LondheShubham153/two-tier-flask-app]. 
 
 **My contribution:**
 - Dockerized the application and MySQL database
